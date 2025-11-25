@@ -1,0 +1,57 @@
+{
+  "id": "5f2ecd40-f3ed-4372-9182-eb940b6ff39f",
+  "name": "Streamline Reports",
+  "publisher": "Default Publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+      {
+          "id": "8fea406d-3c0e-46a7-93bc-312baf936ad4",
+          "name": "NEU Report Layouts & Whse Delivery Instruction",
+          "version": "1.0.1.209",
+          "publisher": "Neuways"
+      },
+      {
+        "id": "1299850a-e4ac-414f-8149-f1ae7e498a10",
+        "name": "ItemBuilder",
+        "version": "1.0.0.228",
+        "publisher": "Neuways"
+      },
+      {
+        "id": "17660d62-ba30-44ca-b275-7f3cc13bf162",
+        "name": "Quonobe",
+        "version": "1.0.0.25",
+        "publisher": "Neuways"
+      },
+      {
+        "id": "bc4573ad-01c2-40e1-8534-323ba34ebfe6",
+        "name": "NEU Item Builder Ext Apparel",
+        "version": "1.0.0.122",
+        "publisher": "Neuways"
+      }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
