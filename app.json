@@ -2,7 +2,7 @@
   "id": "5f2ecd40-f3ed-4372-9182-eb940b6ff39f",
   "name": "Streamline Reports",
   "publisher": "Default Publisher",
-  "version": "1.0.0.0",
+  "version": "1.0.0.1",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -46,9 +46,9 @@
     }
   ],
   "resourceExposurePolicy": {
-    "allowDebugging": true,
-    "allowDownloadingSource": true,
-    "includeSourceInSymbolFile": true
+    "allowDebugging": false,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
   },
   "runtime": "15.0",
   "features": [
