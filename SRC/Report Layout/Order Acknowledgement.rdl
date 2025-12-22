@@ -9,7 +9,7 @@
       <am:Name>MSRB</am:Name>
       <am:Version>15.0.20283.0</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-11-17T12:18:20.2027689Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-12-08T06:35:54.0293753Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -695,9 +695,6 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox12</rd:DefaultName>
-                                            <Visibility>
-                                              <Hidden>=IIF(Last(Fields!CC.Value) = 0, True, False)</Hidden>
-                                            </Visibility>
                                             <Style>
                                               <Border>
                                                 <Color>LightGrey</Color>
@@ -953,7 +950,7 @@
                               <DataSetName>DataSet_Result</DataSetName>
                               <Top>2.11447in</Top>
                               <Height>1.75in</Height>
-                              <Width>7.67843in</Width>
+                              <Width>7.67841in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1455,13 +1452,8 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!QuoteNo.Value</Value>
-                                      <Style>
-                                        <FontStyle>Normal</FontStyle>
-                                        <FontWeight>Normal</FontWeight>
-                                        <TextDecoration>None</TextDecoration>
-                                        <Color>#000000</Color>
-                                      </Style>
+                                      <Value>=Fields!ExtDocNo_SalesHeader.Value</Value>
+                                      <Style />
                                     </TextRun>
                                   </TextRuns>
                                   <Style />
@@ -1587,8 +1579,13 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!ExtDocNo_SalesHeader.Value</Value>
-                                      <Style />
+                                      <Value>=Fields!QuoteNo.Value</Value>
+                                      <Style>
+                                        <FontStyle>Normal</FontStyle>
+                                        <FontWeight>Normal</FontWeight>
+                                        <TextDecoration>None</TextDecoration>
+                                        <Color>#000000</Color>
+                                      </Style>
                                     </TextRun>
                                   </TextRuns>
                                   <Style />
@@ -5141,11 +5138,26 @@ RP50Wny69D9n3jJAjk3+ZEfxYewFfYfx8/Zl8KftGR6Mnii61S3XSjKYP7NnSPPmbd27cjZ+4MYxXkB/
         <Field Name="SalespersonPurchaser_Email">
           <DataField>SalespersonPurchaser_Email</DataField>
         </Field>
+        <Field Name="SalespersonPurchaser_Phone">
+          <DataField>SalespersonPurchaser_Phone</DataField>
+        </Field>
         <Field Name="Sell_to_Contact">
           <DataField>Sell_to_Contact</DataField>
         </Field>
         <Field Name="Currency_Symbol">
           <DataField>Currency_Symbol</DataField>
+        </Field>
+        <Field Name="CompanyShipToAddress">
+          <DataField>CompanyShipToAddress</DataField>
+        </Field>
+        <Field Name="CompanyShipToAddress2">
+          <DataField>CompanyShipToAddress2</DataField>
+        </Field>
+        <Field Name="CompanyShipToCity">
+          <DataField>CompanyShipToCity</DataField>
+        </Field>
+        <Field Name="CompanyShipToPostCode">
+          <DataField>CompanyShipToPostCode</DataField>
         </Field>
         <Field Name="Registration_Number">
           <DataField>Registration_Number</DataField>
@@ -5176,6 +5188,18 @@ RP50Wny69D9n3jJAjk3+ZEfxYewFfYfx8/Zl8KftGR6Mnii61S3XSjKYP7NnSPPmbd27cjZ+4MYxXkB/
         </Field>
         <Field Name="Item_Picture">
           <DataField>Item_Picture</DataField>
+        </Field>
+        <Field Name="CarriageAmount">
+          <DataField>CarriageAmount</DataField>
+        </Field>
+        <Field Name="CarriageAmountFormat">
+          <DataField>CarriageAmountFormat</DataField>
+        </Field>
+        <Field Name="Unit_Price">
+          <DataField>Unit_Price</DataField>
+        </Field>
+        <Field Name="Unit_PriceFormat">
+          <DataField>Unit_PriceFormat</DataField>
         </Field>
         <Field Name="IS_Document_No_">
           <DataField>IS_Document_No_</DataField>

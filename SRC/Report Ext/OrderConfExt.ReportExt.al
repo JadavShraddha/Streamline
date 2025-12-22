@@ -6,13 +6,19 @@ reportextension 50100 "Order Conf. Ext" extends "Standard Sales - Order Conf."
         {
             column(Salesperson_Code; SalespersonPurchaser.Name){}
             column(SalespersonPurchaser_Email; SalespersonPurchaser."E-Mail"){}
+            column(SalespersonPurchaser_Phone;SalespersonPurchaser."Phone No."){}
             column(Sell_to_Contact;"Sell-to Contact"){}
             column(Currency_Symbol;CurrencySymbol){}
-            column(Registration_Number;CompanyInfo."Registration No."){}
-            column(Company_Reg_Name;CompanyInfo."Registered Name") {}
-            column(Company_Reg_Address;CompanyInfo."Registered Address"){}
-            column(Company_Reg_City;CompanyInfo."Registered City"){}
-            column(Company_Reg_Postcode;CompanyInfo."Registered Post Code"){}
+            column(CompanyShipToAddress;CompanyInfo."Ship-to Address"){}
+            column(CompanyShipToAddress2;CompanyInfo."Ship-to Address 2"){}
+            column(CompanyShipToCity;CompanyInfo."Ship-to City"){}
+            column(CompanyShipToPostCode;CompanyInfo."Ship-to Post Code"){}
+            column(Registration_Number; CompanyInfo."Registration No.") { }
+            column(Company_Reg_Name; CompanyInfo."Registered Name") { }
+            column(Company_Reg_Address; CompanyInfo."Registered Address") { }
+            column(Company_Reg_City; CompanyInfo."Registered City") { }
+            column(Company_Reg_Postcode; CompanyInfo."Registered Post Code") { }
+
         }
         modify(Header)
         {
@@ -41,6 +47,8 @@ reportextension 50100 "Order Conf. Ext" extends "Standard Sales - Order Conf."
             column(GoodsTotal; GoodsTotal) { }
             column(CC; CC) { }
             column(Item_Picture; item.Picture){}
+            column(CarriageAmount;CarriageAmount){}
+            column(Unit_Price;"Unit Price"){}
         }
 
         addbefore(AssemblyLine)
@@ -109,12 +117,34 @@ reportextension 50100 "Order Conf. Ext" extends "Standard Sales - Order Conf."
             end;
 
             trigger OnAfterAfterGetRecord()
+            var 
+                SL: Record "Sales Line";
             begin
+                Clear(CarriageAmount);
+                Clear(CarriageAmount);
+                Clear(CC);
+                Clear(Quantity);
+
+
                 GoodsTotal := 0;
                 GoodsTotal := Line."Line Amount";
                 Clear(Item);
                 If Line.Type = Line.Type::Item then
                     Item.Get(Line."No.");
+
+                SL.SetFilter("Document Type", '%1', SalesLine."Document Type"::Order);
+                SL.SetFilter("Document No.", '%1', Header."No.");
+                SL.SetFilter(Type, '%1|%2', SL.Type::"G/L Account", SL.Type::Item);
+                SL.SetFilter("Line No.", '%1..', Line."Line No.", "Sales Line"."Line No." + 1);
+                if "Sales Line".FindSet() then
+                repeat
+                    if SL.Type = SL.Type::"G/L Account" then
+                        CarriageAmount += SL."Line Amount"
+                    else if (SL.Type = SL.Type::Item) then
+                        break;
+                until "Sales Line".Next() = 0;
+
+                GoodsTotal += CarriageAmount;
             end;
         }
     }
@@ -124,7 +154,7 @@ reportextension 50100 "Order Conf. Ext" extends "Standard Sales - Order Conf."
         layout("Order Acknowledgement")
         {
             Type = RDLC;
-            LayoutFile = '.\SRC\Report Layout\Order Acknowledgement.rdl';
+            LayoutFile = '.\SRC\Report Layout\Order Acknowledgement After Changes.rdl';
         }
     }
 
@@ -135,6 +165,7 @@ reportextension 50100 "Order Conf. Ext" extends "Standard Sales - Order Conf."
         CurrencySymbol: Text[10];
         SalesEmail: Text;
         CC: Decimal;
+        CarriageAmount: Decimal;
         
 
         local procedure FindNextLineNo(): Integer

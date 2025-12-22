@@ -1,11 +1,12 @@
 reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
 {
+
     dataset
     {
         add(Header)
         {
             column(Sell_to_Contact;"Sell-to Contact"){}
-            column(SalespersonPurchaser_Email; SalespersonPurchaser."E-Mail") { }
+            column(SalespersonPurchaser_Email; SalespersonPurchaser."E-Mail") { }   
             column(SalespersonPurchaser_PhoneNo;SalespersonPurchaser."Phone No."){}
             column(Currency_Symbol; CurrencySymbol) { }
             column(Bill_to_Contact; SalespersonPurchaser.Name) { }
@@ -166,7 +167,7 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
                                     
                 //                 PriceList.Add(SL."Unit Price");
                 //                 LineAmtList.Add(SL."Line Amount");
-                //                 // GoodsTotal := SL."Line Amount";
+                //                 GoodsTotal := SL."Line Amount";
                 //             end
                 //             else 
                 //                 break;
@@ -255,8 +256,6 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
     }
 
     trigger OnPreReport()
-    var
-        myInt: Integer;
     begin
         MyCompanyInfo.Get();
     end;
