@@ -34,6 +34,12 @@
         "name": "NEU Item Builder Ext Apparel",
         "version": "1.0.0.122",
         "publisher": "Neuways"
+      },
+      {
+        "id": "a6655128-15c0-4158-af18-8ed17a5d55b1",
+        "name": "Streamline General",
+        "version": "1.0.0.44",
+        "publisher": "Neuways"
       }
   ],
   "screenshots": [],

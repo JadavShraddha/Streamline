@@ -1,22 +1,21 @@
 reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
 {
-
     dataset
     {
         add(Header)
         {
-            column(Sell_to_Contact;"Sell-to Contact"){}
-            column(SalespersonPurchaser_Email; SalespersonPurchaser."E-Mail") { }   
-            column(SalespersonPurchaser_PhoneNo;SalespersonPurchaser."Phone No."){}
+            column(Sell_to_Contact; "Sell-to Contact") { }
+            column(SalespersonPurchaser_Email; SalespersonPurchaser."E-Mail") { }
+            column(SalespersonPurchaser_PhoneNo; SalespersonPurchaser."Phone No.") { }
             column(Currency_Symbol; CurrencySymbol) { }
             column(Bill_to_Contact; SalespersonPurchaser.Name) { }
             column(CurrDate; CurrentDateTime()) { }
-            column(Sell_to_Customer_Name;"Sell-to Customer Name"){}
-            column(Sell_to_Address;"Sell-to Address"){}
-            column(Sell_to_Address_2;"Sell-to Address 2"){}
-            column(Sell_to_City;"Sell-to City"){}
-            column(Sell_to_Post_Code;"Sell-to Post Code"){}
-            column(Sell_to_Country_Region_Code;"Sell-to Country/Region Code"){}
+            column(Sell_to_Customer_Name; "Sell-to Customer Name") { }
+            column(Sell_to_Address; "Sell-to Address") { }
+            column(Sell_to_Address_2; "Sell-to Address 2") { }
+            column(Sell_to_City; "Sell-to City") { }
+            column(Sell_to_Post_Code; "Sell-to Post Code") { }
+            column(Sell_to_Country_Region_Code; "Sell-to Country/Region Code") { }
             column(Company_Name; MyCompanyInfo."Ship-to Name") { }
             column(Company_Address; MyCompanyInfo."Ship-to Address") { }
             column(Company_Address_2; MyCompanyInfo."Ship-to Address 2") { }
@@ -75,8 +74,9 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
                 Clear(Item);
                 Clear(WebDescription);
                 If Line.Type = Line.Type::Item then
-                    if Item.Get(Line."No.") then 
+                    if Item.Get(Line."No.") then
                         WebDescription := Item."Web Description";
+                        // WebDescription := '<div style="text-align: justify; text-justify: inter-word;">' + Item."Web Description" + '</div>';
             end;
         }
 
@@ -85,11 +85,13 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
             dataitem("NEU Item Builder Header"; "NEU Item Builder Header")
             {
                 DataItemLinkReference = Line;
+                DataItemTableView = sorting("Document Type");
                 DataItemLink = "Document Type" = field("Document Type"), "Document No." = field("Document No."), "Line No." = field("Line No.");
 
                 column(IS_Document_No_; "Document No.") { }
                 dataitem(Item_Specification; "NEU Item Specifications")
                 {
+                    DataItemTableView = sorting("Document Type");
                     column(IS_Item_Category_Code; "Item Category Code") { }
                     column(Item_Specification_Code; "Item Specification Code") { }
                     column(Item_Specification_Text; "Item Specification Text") { }
@@ -108,12 +110,13 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
                     end;
                 }
             }
-           
+
             dataitem("Sales Line"; "Sales Line")
             {
+                DataItemTableView = sorting("Document Type");
                 column(No_; "No.") { }
                 column(Line_No_; "Line No.") { }
-                column(Sales_Line_Type;Type){}
+                column(Sales_Line_Type; Type) { }
                 column(Comment_Description; Description) { }
                 column(Quantity; Quantity) { }
                 column(Line_Amount; "Line Amount") { }
@@ -133,12 +136,13 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
             }
             dataitem(PriceBreakdown_Integer; Integer)
             {
+                DataItemTableView = sorting(Number);
                 column(Number; Number) { }
                 column(Qty; QuantityList.Get(Number)) { }
                 column(Price; PriceList.Get(Number)) { }
                 column(Total; LineAmtList.Get(Number)) { }
-                column(LineType;LineType.Get(Number)) {}
-                column(CarriageAmt;CarriageAmtList.Get(Number)) {}
+                column(LineType; LineType.Get(Number)) { }
+                column(CarriageAmt; CarriageAmtList.Get(Number)) { }
                 // trigger OnPreDataItem()
                 // var
                 //     SL: Record "Sales Line";
@@ -164,7 +168,7 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
                 //                     QuantityList.Add(SL.Description);
                 //                     LineType.Add(2);
                 //                 end;
-                                    
+
                 //                 PriceList.Add(SL."Unit Price");
                 //                 LineAmtList.Add(SL."Line Amount");
                 //                 GoodsTotal := SL."Line Amount";
@@ -243,11 +247,11 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
 
     rendering
     {
-        layout("Quote Presentation")
-        {
-            Type = Word;
-            LayoutFile = '.\SRC\Report Layout\Quote Presentation 2.docx';
-        }
+        // layout("Quote Presentation")
+        // {
+        //     Type = Word;
+        //     LayoutFile = '.\SRC\Report Layout\Quote Presentation.docx';
+        // }
         layout("Sales Quotation (item per page)")
         {
             Type = RDLC;
@@ -261,6 +265,7 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
     end;
 
     var
+        MyCompanyInfo: Record "Company Information";
         Item: Record Item;
         SalesLine: Record "Sales Line";
         SellToContactEmail: Text;
@@ -273,7 +278,6 @@ reportextension 50102 "Neu Sales Quote Ext" extends NeuSalesQuote
         CarriageAmtList: List of [Decimal];
         LineType: List of [Integer];
         LastItem: Text;
-        MyCompanyInfo: Record "Company Information";
 
 
     local procedure FindNextLineNo(): Integer
